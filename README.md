@@ -1,6 +1,6 @@
 # ʻŌiwi Makers - TTRPG & Maker Curriculum
 
-**Live Site:** https://[your-username].github.io/oiwi-makers/
+**Live Site:** https://kumujacoby.github.io/oiwi-makers/
 
 A 6-week summer course connecting technology, engineering, and traditional knowledge through tabletop role-playing games and hands-on making projects.
 
