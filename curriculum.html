@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum - Hālau Kūkalaulama</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* KS Colors */
+        :root {
+            --ks-blue: #19325A;
+            --ks-light-blue: #4682F0;
+            --ks-green: #325550;
+            --ks-light-green: #1E826E;
+            --ks-gold: #9B693B;
+            --ks-light-gold: #D29642;
+            --ks-orange: #B43C28;
+            --ks-light-orange: #D24632;
+            --ks-maroon: #6E1432;
+            --ks-grey: #D2D2D2;
+        }
+
+        /* Top Nav */
+        .top-nav {
+            background: var(--ks-blue);
+            color: white;
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .top-nav h1 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .top-nav a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .top-nav a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        /* Layout */
+        .layout {
+            display: flex;
+            margin-top: 100px;
+            min-height: calc(100vh - 100px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--ks-green);
+            color: white;
+            position: fixed;
+            height: calc(100vh - 100px);
+            overflow-y: auto;
+            padding: 1.5rem 0;
+        }
+
+        .sidebar h3 {
+            padding: 0 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .sidebar-link {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            text-decoration: none;
+            transition: background 0.2s;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar-link:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .sidebar-link.active {
+            background: rgba(255,255,255,0.15);
+            border-left-color: var(--ks-light-green);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            padding: 2rem;
+            flex: 1;
+            background: #f9f9f9;
+            overflow-y: auto;
+        }
+
+        .content-wrapper {
+            max-width: 900px;
+        }
+
+        /* Controls */
+        .controls {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: var(--ks-light-green);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background: var(--ks-green);
+        }
+
+        /* Week Section */
+        .week-section {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .week-header {
+            background: var(--ks-blue);
+            color: white;
+            padding: 1.5rem;
+            border-bottom: 4px solid var(--ks-light-blue);
+        }
+
+        .week-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .week-meta {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .week-content {
+            padding: 1.5rem;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            border-left: 4px solid;
+        }
+
+        .info-box.overview {
+            background: #E8F5FF;
+            border-left-color: var(--ks-light-blue);
+        }
+
+        .info-box.overview h4 {
+            color: var(--ks-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box.materials {
+            background: #FFF3E0;
+            border-left-color: var(--ks-gold);
+        }
+
+        .info-box.materials h4 {
+            color: var(--ks-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Day Collapsible */
+        .day-item {
+            margin: 1rem 0;
+        }
+
+        .day-header {
+            background: var(--ks-light-green);
+            color: white;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .day-header:hover {
+            background: var(--ks-green);
+        }
+
+        .day-header:after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: normal;
+        }
+
+        .day-header.active:after {
+            content: '−';
+        }
+
+        .day-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .day-content-inner {
+            padding: 1rem;
+            background: #f5f5f5;
+            border: 2px solid var(--ks-light-green);
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+        }
+
+        /* Schedule Block */
+        .schedule-block {
+            background: white;
+            padding: 1rem;
+            margin: 0.75rem 0;
+            border-left: 3px solid var(--ks-light-green);
+            border-radius: 4px;
+        }
+
+        .time {
+            background: var(--ks-light-green);
+            color: white;
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .schedule-block h4 {
+            color: var(--ks-blue);
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .schedule-block ul {
+            margin: 0.5rem 0 0.5rem 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--ks-blue);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            margin-left: 260px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+            .main-content, footer {
+                margin-left: 0;
+            }
+            .layout {
+                flex-direction: column;
+            }
+        }
+
+        /* Print */
+        @media print {
+            .top-nav, .sidebar, .controls, footer {
+                display: none;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .day-content {
+                max-height: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <h1>🎲 Hālau Kūkalaulama</h1>
+        <div class="top-nav-links">
+            <a href="index.html">Home</a>
+            <a href="curriculum.html">Curriculum</a>
+            <a href="dm-login.html">DM Hub</a>
+            <a href="student-resources.html">Student Resources</a>
+        </div>
+    </nav>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <h3>QUICK NAVIGATION</h3>
+            <a href="#week1" class="sidebar-link">Week 1: 2d6 System</a>
+            <a href="#week2" class="sidebar-link">Week 2: ENI System</a>
+            <a href="#week3" class="sidebar-link">Week 3: Student Adventures</a>
+            <a href="#week4" class="sidebar-link">Week 4: D&D Bridge</a>
+            <a href="#week5" class="sidebar-link">Weeks 5-6: D&D Campaign</a>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-wrapper">
+                <div class="controls">
+                    <button class="btn" onclick="expandAll()">▼ Expand All Days</button>
+                    <button class="btn" onclick="collapseAll()">▲ Collapse All Days</button>
+                    <button class="btn" onclick="window.print()">🖨️ Print Curriculum</button>
+                </div>
+
+                <!-- WEEK 1 -->
+                <section id="week1" class="week-section">
+                    <div class="week-header">
+                        <h2>Week 1: 2d6 System Introduction</h2>
+                        <p class="week-meta">Goal: Introduce tabletop RPGs • Identify 3 student DM candidates</p>
+                    </div>
+                    <div class="week-content">
+                        <div class="info-box overview">
+                            <h4>System: 2d6</h4>
+                            <p><strong>Roll 2d6:</strong> 1-3 Failure, 4-9 Success, 10-12 Great Success</p>
+                            <p><strong>Hit Points:</strong> Everyone has 3 HP</p>
+                            <p><strong>Characters:</strong> Index cards - 5 minute creation</p>
+                        </div>
+
+                        <div class="info-box materials">
+                            <h4>Materials Needed</h4>
+                            <ul>
+                                <li>16-20 sets of 2d6</li>
+                                <li>100+ index cards</li>
+                                <li>Markers and colored pencils</li>
+                                <li>LEGO bins with minifig parts</li>
+                                <li>Station signs for 4 groups</li>
+                            </ul>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 1.1: Welcome & 2d6 Basics</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <div class="schedule-block">
+                                        <span class="time">0:00-0:10</span>
+                                        <h4>Welcome & TTRPG Introduction</h4>
+                                        <p>Tell stories together using imagination and dice.</p>
+                                        <p><strong>Example:</strong> "You find a locked door. What do you do? Roll to see if it works!"</p>
+                                    </div>
+
+                                    <div class="schedule-block">
+                                        <span class="time">0:10-0:20</span>
+                                        <h4>Teach 2d6 System</h4>
+                                        <p><strong>Write on board:</strong></p>
+                                        <ul>
+                                            <li>Roll 2 dice, add them together</li>
+                                            <li>1-3 = Failure</li>
+                                            <li>4-9 = Success (biggest range!)</li>
+                                            <li>10-12 = Great Success</li>
+                                        </ul>
+                                        <p>Everyone practices rolling once.</p>
+                                    </div>
+
+                                    <div class="schedule-block">
+                                        <span class="time">0:20-0:40</span>
+                                        <h4>Character Creation</h4>
+                                        <p><strong>Format:</strong> "You are a [race] [class] named [name]. You like [trait] and have [item]."</p>
+                                        <p><strong>Example:</strong> "You are an Elven wizard named Trixie. You like fire and have a jar of eyeballs."</p>
+                                        <p>Draw 3 circles on back for HP.</p>
+                                    </div>
+
+                                    <div class="schedule-block">
+                                        <span class="time">0:40-1:10</span>
+                                        <h4>Demo Adventure: "The Friendly Ghost"</h4>
+                                        <p><strong>Hook:</strong> Ghost making noise in library at night.</p>
+                                        <p><strong>Scene 1:</strong> Investigate (find floating books, hear crying)</p>
+                                        <p><strong>Scene 2:</strong> Meet ghost (looks sad, not scary)</p>
+                                        <p><strong>Scene 3:</strong> Help ghost find their lost book</p>
+                                        <p><strong>Resolution:</strong> Ghost becomes library guardian</p>
+                                    </div>
+
+                                    <div class="schedule-block">
+                                        <span class="time">1:10-1:30</span>
+                                        <h4>Wrap & Preview</h4>
+                                        <p>Debrief: What was fun? Tomorrow: small groups + LEGO!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 1.2: Station Rotations Begin</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <div class="schedule-block">
+                                        <h4>Station System (20 min per station)</h4>
+                                        <ul>
+                                            <li><strong>Station 1 (with Kumu):</strong> "The Lost Puppy" adventure</li>
+                                            <li><strong>Station 2:</strong> Build LEGO character minifig</li>
+                                            <li><strong>Station 3:</strong> Draw and decorate character card</li>
+                                            <li><strong>Station 4:</strong> Dice practice - roll 10 times, track results</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 1.3: More Adventures</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p><strong>Adventure:</strong> "The Cookie Thief" - someone stealing cookies from bakery</p>
+                                    <p>Follow crumbs, discover hungry creature, solve without violence.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 1.4: Team Adventure</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p><strong>Adventure:</strong> "The Bridge of Riddles" - talking bridge blocks path</p>
+                                    <p><strong>Note:</strong> Identify top 5-6 DM candidates by end of day.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 1.5: Epic Finale & DM Selection</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p><strong>Adventure:</strong> "The Dragon's Birthday"</p>
+                                    <div class="schedule-block">
+                                        <h4>Select Student DMs</h4>
+                                        <p>Pull aside 3 students: "Would you like to learn to run games?"</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- WEEK 2 -->
+                <section id="week2" class="week-section">
+                    <div class="week-header">
+                        <h2>Week 2: ENI System & Student DM Training</h2>
+                        <p class="week-meta">Goal: Transition to ENI • Train student DMs • Form groups</p>
+                    </div>
+                    <div class="week-content">
+                        <div class="info-box overview">
+                            <h4>System: ENI</h4>
+                            <p><strong>Dice Pool:</strong> d4, d6, d8, d10, d12, d20 (one of each)</p>
+                            <p><strong>Roll 4+ to succeed</strong> • Spent dice unavailable until rest</p>
+                            <p><strong>Eni Currency:</strong> Silver = +1, Gold = re-roll</p>
+                        </div>
+
+                        <div class="info-box materials">
+                            <h4>Materials Needed</h4>
+                            <ul>
+                                <li>16 full polyhedral dice sets</li>
+                                <li>ENI character sheets (printed)</li>
+                                <li>ENI zines (4 copies)</li>
+                                <li>Tokens for eni currency</li>
+                                <li>Student DM notebooks (3)</li>
+                            </ul>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 2.1: Introduce ENI (Whole Class)</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <div class="schedule-block">
+                                        <h4>Teach ENI System</h4>
+                                        <p>"What if you could CHOOSE which dice to use?"</p>
+                                        <p>Show the 6 dice. Bigger = more powerful, but only ONE of each.</p>
+                                    </div>
+                                    <div class="schedule-block">
+                                        <h4>First ENI Adventure: "The Shrinking Spell"</h4>
+                                        <p>Everything in wizard's tower slowly shrinking! Find spell book, reverse it.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 2.2: Student DM Practice</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p>Each student DM runs SHORT (15 min) encounter.</p>
+                                    <p>Kumu rotates, coaches in real-time.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 2.3: Formalize Groups</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p><strong>Groups:</strong> Red, Blue, Green (each with student DM)</p>
+                                    <p>Start building shared LEGO home base locations.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 2.4: Student DMs Lead</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p>3 tables running simultaneously. Student DMs facilitate.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 2.5: Mastery & Reflection</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p>Showcase LEGO builds, share stories.</p>
+                                    <p><strong>Preview:</strong> Next week YOU create adventures!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- WEEK 3 -->
+                <section id="week3" class="week-section">
+                    <div class="week-header">
+                        <h2>Week 3: Student-Created Adventures</h2>
+                        <p class="week-meta">Goal: Groups design and run their own ENI adventures</p>
+                    </div>
+                    <div class="week-content">
+                        <div class="info-box overview">
+                            <h4>Adventure Structure</h4>
+                            <p><strong>Hook →</strong> Obstacles <strong>→</strong> Resolution</p>
+                            <p>Multiple solutions possible • Not all problems need combat</p>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 3.1: Adventure Design Workshop</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p>Teach adventure structure. Groups brainstorm ideas.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Days 3.2 & 3.3: LEGO Building</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p>Build LEGO locations for adventures. Create props, NPCs, challenge areas.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 3.4: Practice Runs</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p>Groups do dry runs. Feedback and refinement.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 3.5: Adventure Showcase</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p>Each group runs their adventure for another group. Celebrate!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- WEEK 4 -->
+                <section id="week4" class="week-section">
+                    <div class="week-header">
+                        <h2>Week 4: D&D Bridge & Intensive DM Training</h2>
+                        <p class="week-meta">Goal: Introduce D&D 5e • Intensive student DM training</p>
+                    </div>
+                    <div class="week-content">
+                        <div class="info-box overview">
+                            <h4>System: D&D 5e</h4>
+                            <p><strong>d20 + modifier vs target number</strong></p>
+                            <p><strong>Advantage:</strong> Roll 2d20, take higher</p>
+                            <p><strong>Disadvantage:</strong> Roll 2d20, take lower</p>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 4.1: D&D Introduction</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p>Show D&D context. Teach d20 system. Convert characters.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 4.2: Student DM Intensive</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p>Extended coaching (90 min): stat blocks, combat, DM screens.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Days 4.3-4.5: Practice D&D</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p>Student DMs run short encounters. Kumu coaches in real-time.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- WEEKS 5-6 -->
+                <section id="week5" class="week-section">
+                    <div class="week-header">
+                        <h2>Weeks 5-6: "The Three Guardians" D&D Campaign</h2>
+                        <p class="week-meta">Goal: Student-DM'd campaigns • Combined finale • ʻOhana showcase</p>
+                    </div>
+                    <div class="week-content">
+                        <div class="info-box overview">
+                            <h4>Campaign Story</h4>
+                            <p><strong>Problem:</strong> Seasons stuck in summer. Ancient crystals scattered.</p>
+                            <p><strong>Group Red:</strong> Fire Guardian (summer desert)</p>
+                            <p><strong>Group Blue:</strong> Earth Guardian (overgrown jungle)</p>
+                            <p><strong>Group Green:</strong> Wind Guardian (harvest valley)</p>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Week 5: Parallel Adventures (Days 5.1-5.5)</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p>Each group adventures toward their guardian.</p>
+                                    <p>Student DMs run 90% of play. Kumu supports with rotations.</p>
+                                    <p><strong>Friday:</strong> Share stories, show builds, plan finale.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Days 6.1-6.2: Journey to Season Temple</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p>Groups travel together. Build Season Temple in LEGO.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 6.3: Epic Finale</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p>All 16 students + 3 DMs work together. Place crystals, activate season wheel!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 6.4: Create Adventure Anthology</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p>Compile photos. Students write/draw favorite moments. Display-ready book.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-item">
+                            <div class="day-header">Day 6.5: ʻOhana Showcase</div>
+                            <div class="day-content">
+                                <div class="day-content-inner">
+                                    <p>Display LEGO and anthology. Run demo for visitors. Certificates!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>Hālau Kūkalaulama • Kamehameha Schools Engineering & Design</p>
+        <p>E Ola! Framework • ʻIke Kūpuna • Constructionist Learning</p>
+    </footer>
+
+    <script>
+        // Smooth scroll for sidebar links
+        document.querySelectorAll('.sidebar-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // Update active state
+                document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Day collapsibles
+        document.addEventListener('DOMContentLoaded', function() {
+            const dayHeaders = document.querySelectorAll('.day-header');
+            dayHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            });
+        });
+
+        function expandAll() {
+            document.querySelectorAll('.day-header').forEach(header => {
+                header.classList.add('active');
+                header.nextElementSibling.style.maxHeight = header.nextElementSibling.scrollHeight + "px";
+            });
+        }
+
+        function collapseAll() {
+            document.querySelectorAll('.day-header').forEach(header => {
+                header.classList.remove('active');
+                header.nextElementSibling.style.maxHeight = null;
+            });
+        }
+
+        // Update active sidebar link on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.week-section');
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

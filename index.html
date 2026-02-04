@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ʻŌiwi Makers - Kamehameha Schools</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        :root {
+            --ks-blue: #19325A;
+            --ks-light-blue: #4682F0;
+            --ks-green: #325550;
+            --ks-light-green: #1E826E;
+            --ks-gold: #9B693B;
+            --ks-light-gold: #D29642;
+        }
+        nav {
+            background: var(--ks-blue);
+            color: white;
+            padding: 1.5rem 2rem;
+        }
+        nav h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 1.5rem;
+            opacity: 0.9;
+        }
+        nav a:hover { opacity: 1; text-decoration: underline; }
+        .hero {
+            background: linear-gradient(135deg, var(--ks-blue), var(--ks-green));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .hero h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .hero .subtitle { font-size: 1.3rem; margin: 1.5rem auto; max-width: 900px; line-height: 1.8; }
+        .hero .tagline {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem; }
+        .section-header {
+            text-align: center;
+            color: var(--ks-blue);
+            margin: 3rem 0 2rem;
+            font-size: 2rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--ks-green);
+        }
+        .card.making { border-top-color: var(--ks-light-blue); }
+        .card.aina { border-top-color: var(--ks-light-green); }
+        .card.storytelling { border-top-color: var(--ks-gold); }
+        .card h3 { color: var(--ks-blue); margin-bottom: 1rem; font-size: 1.4rem; }
+        .card .icon { font-size: 2.5rem; margin-bottom: 0.5rem; display: block; }
+        .btn {
+            display: inline-block;
+            background: var(--ks-light-green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0.5rem;
+        }
+        .btn:hover { background: var(--ks-green); }
+        .highlight-box {
+            background: #E8F5FF;
+            border-left: 4px solid var(--ks-light-blue);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .highlight-box h3 { color: var(--ks-blue); margin-bottom: 1rem; }
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .value-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--ks-green);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+        .value-card h4 {
+            color: var(--ks-green);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        footer {
+            background: var(--ks-blue);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        @media (max-width: 768px) {
+            .two-col { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>🌺 ʻŌiwi Makers</h1>
+        <div>
+            <a href="index.html">Home</a>
+            <a href="curriculum.html">Curriculum</a>
+            <a href="projects.html">Projects</a>
+            <a href="resources.html">Resources</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h2>ʻŌiwi Makers</h2>
+        <p class="subtitle">
+            Join us this summer for <strong>ʻŌiwi Makers</strong>, an exciting hands-on course connecting 
+            technology and engineering through the lens of <strong>ʻāina</strong>. Haumāna will learn both outdoors 
+            and in the classroom, developing skills such as coding, designing, and inventing. Through collaborative 
+            projects, we will discover how modern technology and traditional knowledge work together to care for ʻāina.
+        </p>
+        <p class="tagline">Technology • ʻĀina • Traditional Knowledge • Collaborative Making</p>
+    </div>
+
+    <div class="container">
+        <h2 class="section-header">Program Pillars</h2>
+        
+        <div class="grid">
+            <div class="card making">
+                <span class="icon">🛠️</span>
+                <h3>Making & Building</h3>
+                <p>Hands-on creation using LEGO robotics, 3D printing, electronics, and traditional materials. Build physical representations of concepts and solutions.</p>
+                <ul style="margin-top: 1rem;">
+                    <li>LEGO construction & robotics</li>
+                    <li>3D design and printing</li>
+                    <li>Electronics & circuits</li>
+                    <li>Traditional crafts</li>
+                </ul>
+            </div>
+
+            <div class="card aina">
+                <span class="icon">🌿</span>
+                <h3>ʻĀina Connection</h3>
+                <p>Learn outdoors and connect with place. Observe, document, and care for ʻāina through technology-enhanced traditional practices.</p>
+                <ul style="margin-top: 1rem;">
+                    <li>Outdoor observation & documentation</li>
+                    <li>Water systems & watersheds</li>
+                    <li>Native plants & ecosystems</li>
+                    <li>Environmental monitoring</li>
+                </ul>
+            </div>
+
+            <div class="card storytelling">
+                <span class="icon">📖</span>
+                <h3>Storytelling & Worldbuilding</h3>
+                <p>Use TTRPGs as a tool for collaborative storytelling about ʻāina. Create narratives, solve problems creatively, and develop leadership.</p>
+                <ul style="margin-top: 1rem;">
+                    <li>Tabletop RPG facilitation</li>
+                    <li>Collaborative narrative design</li>
+                    <li>Problem-solving through story</li>
+                    <li>Student DM development</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <h3>How It All Connects: The Ahupuaʻa Project</h3>
+            <p>Throughout the 6 weeks, haumāna will work together to create a functioning model ahupuaʻa ecosystem that integrates all three pillars:</p>
+            <div class="two-col" style="margin-top: 1.5rem;">
+                <div>
+                    <p><strong>🛠️ Making:</strong> Build LEGO models with moving water systems, 3D-printed plants and features, programmed sensors and automation</p>
+                    <p style="margin-top: 1rem;"><strong>🌿 ʻĀina Knowledge:</strong> Design based on real watershed principles, native species, traditional resource management, mauka-to-makai flow</p>
+                </div>
+                <div>
+                    <p><strong>📖 Storytelling:</strong> Create TTRPG adventures set in the ahupuaʻa, with characters who care for different zones, solve environmental challenges, and embody kuleana</p>
+                    <p style="margin-top: 1rem;"><strong>🎯 Outcome:</strong> Working model + adventure anthology + student presentation to ʻohana</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-header">6-Week Journey</h2>
+        
+        <div class="grid">
+            <div class="card">
+                <h3>Weeks 1-2: Foundations</h3>
+                <p><strong>Making:</strong> LEGO basics, 2d6 TTRPG system, character creation</p>
+                <p><strong>ʻĀina:</strong> Introduce ahupuaʻa concept, outdoor observation walks</p>
+                <p><strong>Build:</strong> Personal character minifigs, initial zone sketches</p>
+            </div>
+
+            <div class="card">
+                <h3>Weeks 3-4: Development</h3>
+                <p><strong>Making:</strong> ENI system, LEGO Technic, 3D design introduction</p>
+                <p><strong>ʻĀina:</strong> Water cycle, native plants, traditional practices</p>
+                <p><strong>Build:</strong> Ahupuaʻa zones taking shape, student-created adventures</p>
+            </div>
+
+            <div class="card">
+                <h3>Weeks 5-6: Integration & Showcase</h3>
+                <p><strong>Making:</strong> D&D system, automation with sensors, final assembly</p>
+                <p><strong>ʻĀina:</strong> System integration, sustainability concepts</p>
+                <p><strong>Build:</strong> Complete working ahupuaʻa + campaign finale + ʻohana showcase</p>
+            </div>
+        </div>
+
+        <h2 class="section-header">ʻIke Kūpuna & Hawaiian Values</h2>
+        
+        <div class="values-grid">
+            <div class="value-card">
+                <h4>🤝 Aloha</h4>
+                <p>Compassion and kindness in collaboration. Creative problem-solving that helps rather than harms.</p>
+            </div>
+            <div class="value-card">
+                <h4>💪 Kuleana</h4>
+                <p>Responsibility for our creations and our impact on ʻāina. Student DMs take kuleana for their groups.</p>
+            </div>
+            <div class="value-card">
+                <h4>🌺 Mālama ʻĀina</h4>
+                <p>Care for the land in both physical projects and story narratives. Design solutions that sustain.</p>
+            </div>
+            <div class="value-card">
+                <h4>👥 ʻOhana</h4>
+                <p>Working together as family. Supporting each other's success. Sharing knowledge.</p>
+            </div>
+            <div class="value-card">
+                <h4>🧠 Naʻauao</h4>
+                <p>Learning through doing. Combining ʻike kūpuna with modern tools. Wisdom in practice.</p>
+            </div>
+            <div class="value-card">
+                <h4>🎯 Hoʻohana</h4>
+                <p>Working with purpose and excellence. Making things that matter. Serving community.</p>
+            </div>
+        </div>
+
+        <h2 class="section-header">Program Details</h2>
+        
+        <div class="grid">
+            <div class="card">
+                <h3>👥 Haumāna</h3>
+                <p><strong>16 students (grades 5-6)</strong></p>
+                <p>3 student DMs + 13 players</p>
+                <p>3 collaborative groups</p>
+            </div>
+
+            <div class="card">
+                <h3>⏱️ Schedule</h3>
+                <p><strong>90 minutes per day</strong></p>
+                <p>5 days per week</p>
+                <p>6 weeks total</p>
+                <p>Mix of indoor/outdoor</p>
+            </div>
+
+            <div class="card">
+                <h3>🛠️ Tools & Materials</h3>
+                <p><strong>LEGO (bricks, Technic, robotics)</strong></p>
+                <p>3D printers & design software</p>
+                <p>TTRPG materials (dice, sheets)</p>
+                <p>Outdoor observation tools</p>
+            </div>
+
+            <div class="card">
+                <h3>🎓 Learning Framework</h3>
+                <p><strong>E Ola! + Constructionism</strong></p>
+                <p>Create. Test. Improve.</p>
+                <p>Hands-on, project-based</p>
+                <p>Student-led discovery</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="curriculum.html" class="btn">View Detailed Curriculum →</a>
+            <a href="projects.html" class="btn">See Example Projects →</a>
+        </div>
+
+        <div class="highlight-box" style="background: #F0FFF4; border-left-color: var(--ks-light-green);">
+            <h3>Why TTRPGs for ʻĀina Learning?</h3>
+            <p>Tabletop role-playing games are powerful tools for:</p>
+            <ul style="margin: 1rem 0 1rem 2rem;">
+                <li><strong>Systems thinking:</strong> Understanding how actions affect interconnected parts of an ecosystem</li>
+                <li><strong>Perspective-taking:</strong> Playing characters with different kuleana (farmer, fisherman, kahuna, ali'i)</li>
+                <li><strong>Collaborative problem-solving:</strong> Working together to solve complex environmental challenges</li>
+                <li><strong>Narrative meaning:</strong> Making abstract concepts concrete through story</li>
+                <li><strong>Student agency:</strong> Student DMs develop leadership and facilitation skills</li>
+            </ul>
+            <p style="margin-top: 1rem;"><strong>The combination of physical making + storytelling creates deeper, more memorable learning about ʻāina.</strong></p>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>ʻŌiwi Makers</strong></p>
+        <p>Kamehameha Schools Engineering & Design</p>
+        <p>E Ola! Framework • ʻIke Kūpuna • Constructionist Learning • Mālama ʻĀina</p>
+    </footer>
+</body>
+</html>
